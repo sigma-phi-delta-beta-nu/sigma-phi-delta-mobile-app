@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, Image} from 'react-native';
+//Test comment
 
 export default function App() {
     return (
