@@ -1,15 +1,18 @@
 import { StyleSheet, Text, View, SafeAreaView, Image} from 'react-native';
-//Test comment
+import Barlet from './components/barlet';
 
 export default function App() {
     return (
         <View style={styles.container}>
             <SafeAreaView style={styles.header}>
-                <Text style={styles.innerText}>Sigma Phi Delta</Text>
-                <Image style={styles.crest} source={require('./assets/coat-of-arms.png')}/>
+                <Text style={styles.innerText}>Pro Bono</Text>
             </SafeAreaView>
             <SafeAreaView style={styles.body}/>
-            <SafeAreaView style={styles.footer}/>
+            <SafeAreaView style={styles.footer}>
+                <Barlet/>
+                <Barlet/>
+                <Barlet/>
+            </SafeAreaView>
         </View>
     );
 }
@@ -19,7 +22,7 @@ const styles = StyleSheet.create({
         flex: 1
     },
     header: {
-        flex: 5,
+        flex: 1,
         backgroundColor: '#1E2022',
         alignItems: 'center',
         justifyContent: 'center',
@@ -32,6 +35,7 @@ const styles = StyleSheet.create({
     },
     footer: {
         flex: 1,
+        flexDirection: 'row',
         backgroundColor: '#1E2022',
         borderTopWidth: 1,
         borderTopColor: '#52616B',
@@ -39,10 +43,6 @@ const styles = StyleSheet.create({
     innerText: {
         color: 'white',
         fontSize: 30 
-    },
-    crest: {
-        width: 100,
-        height: 100
     }
 });
 
