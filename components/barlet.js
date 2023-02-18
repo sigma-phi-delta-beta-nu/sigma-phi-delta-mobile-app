@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import reactDom from "react-dom";
 import { Text, View, Button } from "react-native";
-import { TouchableOpacity } from "react-native-web";
+import { TouchableOpacity } from "react-native";
 
 const barLetStyle = {
   // Placeholder style, change as necessary
