@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "sigma-phi-delta-mobile-app",
-    "slug": "sigma-phi-delta-mobile-app",
+    "name": "spd-mobile-app",
+    "slug": "spd-mobile-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
