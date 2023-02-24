@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
         height: 45,
         marginBottom: 20,
         alignItems: 'center',
+        marginLeft: 20,
     },
     textInput: {
         height: 50,

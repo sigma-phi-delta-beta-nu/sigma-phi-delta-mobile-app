@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import reactDom from "react-dom";
 import { Text, View, Button } from "react-native";
 import { TouchableOpacity } from "react-native";
 
@@ -7,8 +6,8 @@ const barLetStyle = {
   // Placeholder style, change as necessary
   backgroundColor: "white",
   color: "White",
-  flex: "1",
-  alignItems: "center",
+  flex: 1,
+  //alignItems: "center", This doesn't work @Scott - James
   width: "85%",
 };
 
@@ -23,7 +22,7 @@ function Barlet({ icon }) {
       }}
     >
       <TouchableOpacity style={barLetStyle}>
-        <Text style={{ fontFamily: "Roboto", fontSize: "50px" }}>
+        <Text style={{ fontFamily: "Roboto", fontSize: 50 }}>
           {icon.name}
         </Text>
       </TouchableOpacity>
