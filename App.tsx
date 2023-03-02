@@ -10,8 +10,12 @@ const App = () => {
   return(
     <SafeAreaProvider>
       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Pro Bono" component={SignIn}/>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false
+          }}
+        >
+          <Stack.Screen name = 'SignIn' component={SignIn}/>
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
