@@ -4,12 +4,12 @@ import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Profile from "./Profile";
-import Calendar from "./SignIn";
+import Calendar from "./Calendar";
 
 
 const Tab = createBottomTabNavigator();
 
-function Home() {
+function Main() {
   return (
       <Tab.Navigator >
         <Tab.Screen name="Calendar" component={Calendar} />
@@ -17,4 +17,4 @@ function Home() {
       </Tab.Navigator>
   );
 }
-export default Home
+export default Main;

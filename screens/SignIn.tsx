@@ -1,6 +1,18 @@
-import {Alert, Button,StyleSheet, Text, TextInput, View} from "react-native";
+import {Alert, TouchableOpacity, StyleSheet, Text, TextInput, View} from "react-native";
+import { createNativeStackNavigator, NativeStackScreenProps} from "@react-navigation/native-stack";
 
-const SignIn = () => {
+type SignInProps = NativeStackScreenProps<RootStackParamList, "SignIn">;
+
+export type RootStackParamList = {
+    SignIn: undefined;
+    Main: undefined;
+};
+
+const SignIn: React.FC<SignInProps> = (props) => {
+    const pressSignIn = () => {
+        props.navigation.navigate("Main")
+    }
+
     return( 
         <View style = {styles.container}>
                 <Text style={styles.title}>Pro Bono</Text> 
@@ -10,15 +22,14 @@ const SignIn = () => {
                 <View style={styles.inputView}>
                     <TextInput style={styles.textInput} secureTextEntry={true} placeholder='Password' placeholderTextColor='#ffffff' ></TextInput>
                 </View>
-                <Button
-                    title = "Sign In"
-                    color = '#ffffff'
-                    onPress={() => Alert.alert("Sign in was pressed!")}
-                />
+                <TouchableOpacity
+                    onPress={() => props.navigation.navigate("Main")}
+                    >
+                    <Text style={styles.signInButton}>Sign In</Text>
+                </TouchableOpacity> 
         </View>
     )
 }
-
 const styles = StyleSheet.create({
     title: {
         paddingVertical: 8,
@@ -55,7 +66,11 @@ const styles = StyleSheet.create({
         height: 50,
         flex: 1,
         padding: 10, 
-      }
+    },
+    signInButton: {
+        color: '#ffffff' 
+    }
+
 })
 
 export default SignIn;
