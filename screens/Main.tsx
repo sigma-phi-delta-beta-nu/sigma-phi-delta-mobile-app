@@ -5,6 +5,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Profile from "./Profile";
 import Calendar from "./Calendar";
+import Directory from "./Directory";
+import Forms from "./Forms";
 
 
 const Tab = createBottomTabNavigator();
@@ -13,6 +15,8 @@ function Main() {
   return (
       <Tab.Navigator >
         <Tab.Screen name="Calendar" component={Calendar} />
+        <Tab.Screen name="Forms" component={Forms}/>
+        <Tab.Screen name="Directory" component={Directory}/>
         <Tab.Screen name="Profile" component={Profile}/>
       </Tab.Navigator>
   );
