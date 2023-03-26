@@ -7,25 +7,32 @@ const form3 = 'https://forms.gle/vLZsxWwZjeQa7Akw6'
 
 function Forms () {
     return (
-      <View style={{ flex: 1, 
-                     gap: 20, 
-                     textDecorationLine: 'underline', 
+      <View style={{ flex: 1,
                      justifyContent: 'center', 
                      alignItems: 'center' }}>
         
-        <Text style={{color: 'red'}}
+        <Text style={{color: 'red', textDecorationLine: 'underline'}}
               onPress={() => Linking.openURL(form1)}>
           Social Winter 2023 Feedback
         </Text>
+        <Text>
+          Due Date: 4/1/23{"\n\n"}
+        </Text>
 
-        <Text style={{color: 'red'}}
+        <Text style={{color: 'red', textDecorationLine: 'underline'}}
               onPress={() => Linking.openURL(form2)}>
           Beach Cleanup Sign Up
         </Text>
+        <Text>
+          Due Date: 3/17{"\n\n"}
+        </Text>
 
-        <Text style={{color: 'red'}}
+        <Text style={{color: 'red', textDecorationLine: 'underline'}}
               onPress={() => Linking.openURL(form3)}>
           Spring Formal RSVP
+        </Text>
+        <Text>
+          Due Date: ASAP{"\n\n"}
         </Text>
 
       </View>
