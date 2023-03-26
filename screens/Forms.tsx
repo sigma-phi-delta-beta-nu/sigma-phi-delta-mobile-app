@@ -7,7 +7,11 @@ const form3 = 'https://forms.gle/vLZsxWwZjeQa7Akw6'
 
 function Forms () {
     return (
-      <View style={{ flex: 1, gap: 20, textDecorationLine: 'underline', justifyContent: 'center', alignItems: 'center' }}>
+      <View style={{ flex: 1, 
+                     gap: 20, 
+                     textDecorationLine: 'underline', 
+                     justifyContent: 'center', 
+                     alignItems: 'center' }}>
         
         <Text style={{color: 'red'}}
               onPress={() => Linking.openURL(form1)}>
