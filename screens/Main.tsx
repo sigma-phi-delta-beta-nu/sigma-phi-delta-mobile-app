@@ -13,8 +13,14 @@ const Tab = createBottomTabNavigator();
 
 function Main() {
   return (
-      <Tab.Navigator >
-        <Tab.Screen name="Calendar" component={Calendar} />
+      <Tab.Navigator screenOptions={{
+        headerShown: false,
+        tabBarStyle: {backgroundColor : '#202020'},
+        tabBarActiveTintColor: '#CC0000',
+        tabBarInactiveTintColor: '#999999',
+        
+      }}>
+        <Tab.Screen name="Calendar" component={Calendar}/>
         <Tab.Screen name="Forms" component={Forms}/>
         <Tab.Screen name="Directory" component={Directory}/>
         <Tab.Screen name="Profile" component={Profile}/>
