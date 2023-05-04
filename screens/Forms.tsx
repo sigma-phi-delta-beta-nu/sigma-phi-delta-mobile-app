@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, Linking, StyleSheet } from 'react-native';
+import { Text, View, Linking, StyleSheet, TouchableOpacity } from 'react-native';
 
 const form1 = 'https://forms.gle/g6hna7PL6YPG6SqFA'
 const description1 = "Social Winter 2023 Feedback"
@@ -19,28 +19,19 @@ function Forms () {
                      justifyContent: 'center', 
                      alignItems: 'center' }}>
         
-        <Text style={styles.linklets}
-              onPress={() => Linking.openURL(form1)}>
-          {description1}
-        </Text>
+        <MyButton url={form3} buttonText={description3} />
         <Text>
-          Due Date: {deadline1}{"\n\n"}
+          Due Date: {deadline3}{"\n\n"}
         </Text>
 
-        <Text style={styles.linklets}
-              onPress={() => Linking.openURL(form2)}>
-          {description2}
-        </Text>
+        <MyButton url={form2} buttonText={description2} />
         <Text>
           Due Date: {deadline2}{"\n\n"}
         </Text>
 
-        <Text style={styles.linklets}
-              onPress={() => Linking.openURL(form3)}>
-          {description3}
-        </Text>
+        <MyButton url={form1} buttonText={description1} />
         <Text>
-          Due Date: {deadline3}{"\n\n"}
+          Due Date: {deadline1}{"\n\n"}
         </Text>
 
       </View>
@@ -49,11 +40,43 @@ function Forms () {
 }
 
 const styles = StyleSheet.create({
-    linklets: {
+  button: {
+    backgroundColor: '#ff0000',
+    padding: 10,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 16,
+  },
+  linklets: {
       color: "red",
       textDecorationLine: "underline"
     }
+});
 
-})
+interface MyButtonProps {
+  url: string;
+  buttonText: string;
+}
+
+const MyButton: React.FC<MyButtonProps> = ({ url, buttonText }) => {
+  const handleButtonPress = async () => {
+    const supported = await Linking.canOpenURL(url);
+
+    if (supported) {
+      await Linking.openURL(url);
+    } else {
+      console.log("Don't know how to open URI: " + url);
+    }
+  };
+
+  return (
+    <TouchableOpacity style={styles.button} onPress={handleButtonPress}>
+      <Text style={styles.buttonText}>{buttonText}</Text>
+    </TouchableOpacity>
+  );
+};
 
 export default Forms
