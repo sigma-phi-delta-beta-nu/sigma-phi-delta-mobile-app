@@ -17,20 +17,21 @@ function Forms () {
     return (
       <View style={{ flex: 1,
                      justifyContent: 'center', 
-                     alignItems: 'center' }}>
+                     alignItems: 'center', 
+                     backgroundColor: '#101010' }}>
         
         <MyButton url={form3} buttonText={description3} />
-        <Text>
+        <Text style={styles.deadlineCo}>
           Due Date: {deadline3}{"\n\n"}
         </Text>
 
         <MyButton url={form2} buttonText={description2} />
-        <Text>
+        <Text style={styles.deadlineCo}>
           Due Date: {deadline2}{"\n\n"}
         </Text>
 
         <MyButton url={form1} buttonText={description1} />
-        <Text>
+        <Text style={styles.deadlineCo}>
           Due Date: {deadline1}{"\n\n"}
         </Text>
 
@@ -53,7 +54,10 @@ const styles = StyleSheet.create({
   linklets: {
       color: "red",
       textDecorationLine: "underline"
-    }
+    },
+  deadlineCo: {
+      color: "white"
+  }
 });
 
 interface MyButtonProps {
