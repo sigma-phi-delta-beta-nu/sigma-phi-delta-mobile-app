@@ -17,7 +17,7 @@ function Forms () {
     return (
       <View style={styles.container}>
         
-        <Text style={styles.title}>Profile</Text>
+        <Text style={styles.title}>Forms</Text>
 
         <MyButton url={form3} buttonText={description3} />
         <Text style={styles.deadlineCo}>
