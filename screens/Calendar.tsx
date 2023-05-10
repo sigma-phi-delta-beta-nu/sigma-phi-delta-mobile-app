@@ -1,164 +1,210 @@
-import React, {useState} from 'react';
-import { Text, View, Button, Modal, TouchableOpacity, TextInput,  StyleSheet, Platform } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Button, TextInput, StyleSheet, FlatList, Modal, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 interface Event {
+  id: string;
   title: string;
-  month: number;
-  day: number;
   location: string;
+  date: string;
   startTime: Date;
   endTime: Date;
 }
 
-function Calendar () {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [event, setEvent] = useState<Event | null>(null);
+const EventScreen = () => {
+  const [events, setEvents] = useState<Event[]>([]);
   const [title, setTitle] = useState('');
-  const [month, setMonth] = useState('');
-  const [day, setDay] = useState('');
   const [location, setLocation] = useState('');
+  const [date, setDate] = useState('');
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
-  const [showTimePickerStart, setShowTimePickerStart] = useState(false);
-  const [showTimePickerEnd, setShowTimePickerEnd] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [showStartTimePicker, setShowStartTimePicker] = useState(false);
+  const [showEndTimePicker, setShowEndTimePicker] = useState(false);
 
-  const handleCreateUser = () => {
+  const handleAddEvent = () => {
     const newEvent: Event = {
+      id: Date.now().toString(),
       title,
-      month: Number(month),
-      day: Number(day),
       location,
+      date,
       startTime,
       endTime,
     };
-    setEvent(newEvent);
+
+    setEvents(prevEvents => [...prevEvents, newEvent]);
+    setTitle('');
+    setLocation('');
+    setDate('');
+    setStartTime(new Date());
+    setEndTime(new Date());
     setModalVisible(false);
   };
 
-  const handleStartTimePicker = (event: any, selectedTime: any) => {
-    setShowTimePickerStart(false);
-    if (selectedTime) {
-      setStartTime(selectedTime);
-    }
+  const handleStartTimeChange = (event: any, selectedTime: any) => {
+    const currentTime = selectedTime || startTime;
+    setShowStartTimePicker(Platform.OS === 'ios');
+    setStartTime(currentTime);
   };
 
-  const handleEndTimePicker = (event: any, selectedTime: any) => {
-    setShowTimePickerEnd(false);
-    if (selectedTime) {
-      setEndTime(selectedTime);
-    }
+  const handleEndTimeChange = (event: any, selectedTime: any) => {
+    const currentTime = selectedTime || endTime;
+    setShowEndTimePicker(Platform.OS === 'ios');
+    setEndTime(currentTime);
   };
 
-  const showPickerStart = () => {
-    setShowTimePickerStart(true);
+  const handleRemoveEvent = (eventId: string) => {
+    setEvents(prevEvents => prevEvents.filter(event => event.id !== eventId));
   };
 
-  const showPickerEnd = () => {
-    setShowTimePickerEnd(true);
-  };
+  return (
+    <View style={styles.container}>
+      <Modal visible={modalVisible} animationType="slide">
+        <View style={styles.modalContainer}>
+          <Text style={styles.header}>Create Event</Text>
 
-    return (
-      <View style={styles.container}>
-      <Button title="Create Event" onPress={() => setModalVisible(true)} />
-      {event && (
-        <View>
-          <Text>Title: {event.title}</Text>
-          <Text>Month: {event.month}</Text>
-          <Text>Day: {event.day}</Text>
-          <Text>Location: {event.location}</Text>
-        </View>
-      )}
-      <Modal animationType="slide" visible={modalVisible}>
-        <View style={styles.modal}>
-          <Text style={styles.modalTitle}>Enter User Data:</Text>
           <TextInput
             style={styles.input}
             placeholder="Title"
+            value={title}
             onChangeText={setTitle}
           />
           <TextInput
             style={styles.input}
-            placeholder="Month"
-            keyboardType="numeric"
-            onChangeText={setMonth}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Day"
-            keyboardType="numeric"
-            onChangeText={setDay}
-          />
-          <TextInput
-            style={styles.input}
             placeholder="Location"
+            value={location}
             onChangeText={setLocation}
           />
-          <TouchableOpacity onPress={showPickerStart} style={styles.input}>
-            <Text>
-              {Platform.OS === 'ios'
-                ? startTime.toLocaleTimeString()
-                : startTime.toLocaleDateString()}
-            </Text>
-          </TouchableOpacity>
-          {showTimePickerStart && (
-            <DateTimePicker
-              value={startTime}
-              mode="time"
-              display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-              onChange={handleStartTimePicker}
+          <TextInput
+            style={styles.input}
+            placeholder="Date"
+            value={date}
+            onChangeText={setDate}
+          />
+           <View style={styles.datePickerContainer}>
+            <Text style={styles.datePickerLabel}>Start Time:</Text>
+            <Button
+              title={startTime.toLocaleTimeString()}
+              onPress={() => setShowStartTimePicker(true)}
             />
-          )}
-          <TouchableOpacity onPress={showPickerEnd} style={styles.input}>
-            <Text>
-              {Platform.OS === 'ios'
-                ? endTime.toLocaleTimeString()
-                : endTime.toLocaleDateString()}
-            </Text>
-          </TouchableOpacity>
-          {showTimePickerEnd && (
-            <DateTimePicker
-              value={endTime}
-              mode="time"
-              is24Hour={true}
-              minuteInterval={1}
-              display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-              onChange={handleEndTimePicker}
-            />
-          )}
-          <Button title="Create" onPress={handleCreateUser} />
-          <Button title="Cancel" onPress={() => setModalVisible(false)} />
-        </View>
-      </Modal>
-    </View>
-  );
-}
+            {showStartTimePicker && (
+              <DateTimePicker
+                value={startTime}
+                mode="time"
+                is24Hour={true}
+                display="default"
+                onChange={handleStartTimeChange}
+              />
+            )}
+          </View>
 
+          <View style={styles.datePickerContainer}>
+            <Text style={styles.datePickerLabel}>End Time:</Text>
+            <Button
+              title={endTime.toLocaleTimeString()}
+              onPress={() => setShowEndTimePicker(true)}
+            />
+            {showEndTimePicker && (
+              <DateTimePicker
+                value={endTime}
+                mode="time"
+                is24Hour={true}
+                display="default"
+                onChange={handleEndTimeChange}
+                />
+              )}
+            </View>
+  
+            <Button title="Add Event" onPress={handleAddEvent} />
+            <Button title="Cancel" onPress={() => setModalVisible(false)} />
+          </View>
+        </Modal>
+  
+        <Button title="Create Event" onPress={() => setModalVisible(true)} />
+  
+        <Text style={styles.header}>All Events</Text>
+  
+        <FlatList
+          data={events}
+          keyExtractor={item => item.id}
+          renderItem={({ item }) => (
+            <View style={styles.eventContainer}>
+              <View style={styles.eventHeader}>
+              <Text style={styles.eventTitle}>{item.title}</Text>
+              <Button
+                title="-"
+                onPress={() => handleRemoveEvent(item.id)}
+                color="red"
+              />
+            </View>
+              <Text>{item.location}</Text>
+              <Text>{item.date}</Text>
+              <Text>{item.startTime.toLocaleTimeString()} - {item.endTime.toLocaleTimeString()}</Text>
+            </View>
+          )}
+        />
+      </View>
+    );
+  };
+  
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#101010'
+    padding: 16,
+    backgroundColor: '#ccc',
   },
-  modal: {
+  modalContainer: {
     flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    justifyContent: 'center'
+    padding: 16,
+    backgroundColor: '#fff',
   },
-  modalTitle: {
-    fontSize: 24,
+  header: {
+    fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 16
+    marginBottom: 10,
   },
   input: {
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 4,
     padding: 8,
-    marginVertical: 8,
-    width: '80%'
-  }
+    marginBottom: 10,
+    width: "100%",
+  },
+  eventContainer: {
+    borderWidth: 1,
+    borderColor: '#000000',
+    borderRadius: 4,
+    padding: 8,
+    marginBottom: 10,
+  },
+  eventHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 5,
+    backgroundColor: '#888888',
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    padding: 10,
+  },
+  eventTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  datePickerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  datePickerLabel: {
+    flex: 1,
+    marginRight: 10,
+  },
 });
 
-export default Calendar;
+export default EventScreen;
+

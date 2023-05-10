@@ -25,7 +25,8 @@ const App = () => {
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
-            headerShown: false
+            headerShown: false,
+            navigationBarColor: '#101010'
           }}
         >
           <Stack.Screen name = 'SignIn' component={SignIn}/>
