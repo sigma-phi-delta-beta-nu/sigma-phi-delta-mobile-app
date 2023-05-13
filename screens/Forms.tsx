@@ -15,11 +15,10 @@ const deadline3 = "ASAP"
 
 function Forms () {
     return (
-      <View style={{ flex: 1,
-                     justifyContent: 'center', 
-                     alignItems: 'center', 
-                     backgroundColor: '#101010' }}>
+      <View style={styles.container}>
         
+        <Text style={styles.title}>Forms</Text>
+
         <MyButton url={form3} buttonText={description3} />
         <Text style={styles.deadlineCo}>
           Due Date: {deadline3}{"\n\n"}
@@ -48,8 +47,9 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
-    textAlign: 'center',
+    // textAlign: 'center',
     fontSize: 16,
+    padding: 8
   },
   linklets: {
       color: "red",
@@ -57,7 +57,20 @@ const styles = StyleSheet.create({
     },
   deadlineCo: {
       color: "white"
-  }
+  },
+  title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 20,
+        color: "white"
+    },
+  container: { 
+        flex: 1,
+        // justifyContent: 'left', 
+        // alignItems: 'left', 
+        padding: 20,
+        backgroundColor: '#101010'
+    }
 });
 
 interface MyButtonProps {
