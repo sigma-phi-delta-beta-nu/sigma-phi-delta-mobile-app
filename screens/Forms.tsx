@@ -7,11 +7,15 @@ const deadline1 = "4/1/23"
 
 const form2 = 'https://forms.gle/36kXxP1ka42bvE1z5'
 const description2 = "Beach Cleanup Sign Up"
-const deadline2 = "3/17"
+const deadline2 = "3/17/23"
 
 const form3 = 'https://forms.gle/vLZsxWwZjeQa7Akw6'
 const description3 = "Spring Formal RSVP"
 const deadline3 = "ASAP"
+
+const form4 = 'https://forms.gle/Fy3kUGKrVCgat71r6'
+const description4 = "SPD Dye Tournament Signup"
+const deadline4 = "5/5/23"
 
 function Forms () {
     return (
@@ -32,6 +36,11 @@ function Forms () {
         <MyButton url={form1} buttonText={description1} />
         <Text style={styles.deadlineCo}>
           Due Date: {deadline1}{"\n\n"}
+        </Text>
+
+        <MyButton url={form4} buttonText={description4} />
+        <Text style={styles.deadlineCo}>
+          Due Date: {deadline4}{"\n\n"}
         </Text>
 
       </View>
