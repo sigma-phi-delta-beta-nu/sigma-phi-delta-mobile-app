@@ -14,11 +14,11 @@ interface ProfileData {
 const Profile: React.FC = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [profileData, setProfileData] = useState<ProfileData>({
-        name: 'John Doe',
-        phoneNumber: '123-456-7890',
-        major: 'Computer Science',
-        graduationDate: 'May 2022',
-        employers: ['ABC Company', 'XYZ Corporation'],
+        name: '',
+        phoneNumber: '',
+        major: '',
+        graduationDate: '',
+        employers: [],
     });
 
     const handleInputChange = (field: keyof ProfileData, value: string) => {
@@ -102,14 +102,14 @@ const Profile: React.FC = () => {
                     />
                 ))}
                 {isEditing && (
-                    <TouchableOpacity style={styles.employerAddButton} onPress={handleAddEmployer}>
-                        <Text style={styles.buttonText}>Add Employer</Text>
-                    </TouchableOpacity>
-                )}
-                {isEditing && (
-                    <TouchableOpacity style={styles.employerRemoveButton} onPress={handleRemoveEmployer}>
-                        <Text style={styles.buttonText}>Remove Employer</Text>
-                    </TouchableOpacity>
+                    <View style={styles.employerButtonContainer}>
+                        <TouchableOpacity style={styles.employerAddButton} onPress={handleAddEmployer}>
+                            <Text style={styles.employerButtonText}>+</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.employerRemoveButton} onPress={handleRemoveEmployer}>
+                            <Text style={styles.employerButtonText}>-</Text>
+                        </TouchableOpacity>
+                    </View>
                 )}
             </View>
             <View style={styles.buttonContainer}>
@@ -131,51 +131,67 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
+        backgroundColor: '#101010'
     },
-        title: {
+    title: {
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 20,
+        color: '#FFFFFF'
     },
-        fieldContainer: {
+    fieldContainer: {
         marginBottom: 10,
     },
     label: {
         fontSize: 16,
         fontWeight: 'bold',
         marginBottom: 5,
+        color: '#FFFFFF'
     },
     input: {
         fontSize: 16,
         borderWidth: 1,
-        borderColor: '#ccc',
+        borderColor: '#FFFFFF',
         borderRadius: 5,
         paddingHorizontal: 10,
         paddingVertical: 5,
+        color: '#FFFFFF'
     },
     buttonContainer: {
         marginTop: 20,
     },
     button: {
-        backgroundColor: '#007AFF',
+        backgroundColor: '#950000',
         paddingHorizontal: 20,
         paddingVertical: 10,
-        borderRadius: 5,
+        borderRadius: 10,
+    },
+    employerButtonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 20
     },
     employerAddButton: {
         backgroundColor: '#007AFF',
-        paddingHorizontal: 20,
-        paddingVertical: 10,
-        borderRadius: 5,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderRadius: 10,
+        marginHorizontal: 10
     },
     employerRemoveButton: {
         backgroundColor: '#C02200',
-        paddingHorizontal: 20,
-        paddingVertical: 10,
-        borderRadius: 5,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderRadius: 10,
+        marginHorizontal: 10
+    },
+    employerButtonText: {
+        color: '#000000',
+        fontWeight: 'bold'
     },
     buttonText: {
-        color: '#fff',
+        color: '#FFFFFF',
         fontWeight: 'bold',
         textAlign: 'center',
     },
