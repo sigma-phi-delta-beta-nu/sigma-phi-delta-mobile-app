@@ -1,10 +1,10 @@
-import React from 'react';
-import { FlatList, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { FlatList, View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 
 type Item = {
   letter: string;
   data: string[];
-}
+};
 
 type BarProps = {
   letter: string;
@@ -20,7 +20,26 @@ const DATA: Item[] = [
   { letter: 'G', data: ['George', 'Grace', 'Gina', 'Gary'] },
   // Add more letters and names as needed
 ];
-
+const MAJORS = [
+  { letter: 'A', major: 'Aerospace Engineering' },
+  { letter: 'B', major: 'Biomedical Engineering' },
+  { letter: 'C', major: 'Computer Science' },
+  { letter: 'D', major: 'Data Science' },
+  { letter: 'E', major: 'Electrical Engineering' },
+  { letter: 'F', major: 'Finance' },
+  { letter: 'G', major: 'General Engineering' },
+  // Add more majors as needed
+];
+const EMPLOYERS = [
+  { letter: 'A', company: 'NASA, SpaceX' },
+  { letter: 'B', company: 'Stryker Corporation' },
+  { letter: 'C', company: 'Apple, Google, Amazon' },
+  { letter: 'D', company: 'Goldman Sachs' },
+  { letter: 'E', company: 'Intel' },
+  { letter: 'F', company: 'JPMorgan Chase' },
+  { letter: 'G', company: 'The General Firm' },
+  // Add more majors as needed
+];
 const Bar = ({ letter }: BarProps) => {
   return (
     <View style={styles.bar}>
@@ -29,27 +48,53 @@ const Bar = ({ letter }: BarProps) => {
   );
 };
 
-const NameBar = ({ name }: { name: string }) => {
-  const handlePress = () => {
-    // Handle click event
-    console.log(`Clicked on ${name}`);
+const Directory = () => {
+  const [selectedName, setSelectedName] = useState('');
+  const [isPopupVisible, setPopupVisible] = useState(false);
+  const [selectedPhoneNumber, setSelectedPhoneNumber] = useState('');
+
+  const generatePhoneNumber = () => {
+    const randomNumber = Math.floor(Math.random() * 9000000000) + 1000000000;
+    return randomNumber.toString();
   };
 
-  return (
-    <TouchableOpacity style={styles.nameBar} onPress={handlePress}>
-      <Text style={styles.name}>{name}</Text>
-    </TouchableOpacity>
+  const NameBar = ({ name }: { name: string }) => {
+    const handlePress = () => {
+      setSelectedName(name);
+      setSelectedPhoneNumber(generatePhoneNumber());
+      setPopupVisible(true);
+    };
+
+    return (
+      <TouchableOpacity style={styles.nameBar} onPress={handlePress}>
+        <Text style={styles.name}>{name}</Text>
+      </TouchableOpacity>
+    );
+  };
+
+  const Popup = ({ name }: { name: string }) => {
+    const selectedMajor = MAJORS.find((major) => major.letter === name[0]);
+    const selectedCompany = EMPLOYERS.find((employer) => employer.letter === name[0])
+    return (
+      <View style={styles.popupContainer}>
+        <Text style={styles.popupText}>Name: {name}</Text>
+        <Text style={styles.popupText}>
+          Phone Number: ({selectedPhoneNumber.substring(0, 3)}) {selectedPhoneNumber.substring(3, 6)}-{selectedPhoneNumber.substring(6)}
+        </Text>
+        <Text style={styles.popupText}>Major: {selectedMajor ? selectedMajor.major : 'N/A'}</Text>
+        <Text style={styles.popupText}>Grad Date: {2026 - parseInt(selectedPhoneNumber[0],10)}</Text>
+        <Text style={styles.popupText}>Employers:  {selectedCompany ? selectedCompany.company : 'N/A'}</Text>
+      </View>
+    );
+  };
+
+  const renderItem = ({ item }: { item: Item }) => (
+    <>
+      <Bar letter={item.letter} />
+      {item.data.map(name => <NameBar key={name} name={name} />)}
+    </>
   );
-};
 
-const renderItem = ({ item }: { item: Item }) => (
-  <>
-    <Bar letter={item.letter} />
-    {item.data.map(name => <NameBar key={name} name={name} />)}
-  </>
-);
-
-const Directory = () => {
   return (
     <View style={styles.container}>
       <FlatList
@@ -58,20 +103,29 @@ const Directory = () => {
         keyExtractor={(item, index) => `${item.letter}_${index}`}
         showsVerticalScrollIndicator={false}
       />
+      {isPopupVisible && <Popup name={selectedName} />}
+      <Modal visible={isPopupVisible} animationType="slide" transparent>
+        <View style={styles.modalContainer}>
+          <Popup name={selectedName} />
+          <TouchableOpacity style={styles.closeButton} onPress={() => setPopupVisible(false)}>
+            <Text style={styles.closeButtonText}>Close</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, // add flex: 1 to make the container take up the entire screen height
+    flex: 1,
     backgroundColor: '#000000',
   },
   bar: {
     height: 30,
     width: '100%',
     borderRadius: 5,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#950000',
     marginVertical: 5,
     justifyContent: 'center',
     alignItems: 'center',
@@ -83,15 +137,44 @@ const styles = StyleSheet.create({
   nameBar: {
     height: 50,
     width: '100%',
-    backgroundColor: '#EFEFEF',
+    backgroundColor: '#101010',
     borderBottomWidth: 1,
-    borderBottomColor: '#CCCCCC',
+    borderBottomColor: '#555555',
     justifyContent: 'center',
     paddingLeft: 10,
-    cursor: 'pointer',
   },
   name: {
+    color: '#ffffff',
     fontSize: 16,
+  },
+  popupContainer: {
+    flex: 1,
+    width:"100%",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#000000',
+  },
+  popupText: {
+    fontSize: 20,
+    color: '#FFFFFF',
+    marginBottom: 10,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+    backgroundColor:'#950000',
+    padding: 10,
+    borderRadius: 5,
+  },
+  closeButtonText: {
+    fontSize: 16,
+    color: '#000000',
   },
 });
 
