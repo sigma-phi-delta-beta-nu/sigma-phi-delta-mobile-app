@@ -98,8 +98,6 @@ const EventScreen = () => {
                 is24Hour={true}
                 display="default"
                 onChange={handleStartTimeChange}
-                style={{ backgroundColor: '#ffffff', borderRadius: 10}}
-                textColor="#101010"
               />
 
           </View>
@@ -114,8 +112,6 @@ const EventScreen = () => {
                 is24Hour={true}
                 display="default"
                 onChange={handleEndTimeChange}
-                style={{backgroundColor: '#ffffff', borderRadius: 10,}}
-                textColor="#101010"
               />
             
           </View>
@@ -174,7 +170,7 @@ const EventScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    padding: 20,
     backgroundColor: '#101010',
   },
   modalContainer: {
