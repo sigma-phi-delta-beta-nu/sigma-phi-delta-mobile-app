@@ -1,7 +1,7 @@
 // import * as React from 'react';
 // import { Text, View } from 'react-native';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
 
 interface ProfileData {
     name: string;
@@ -48,7 +48,7 @@ const Profile: React.FC = () => {
     };
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <Text style={styles.title}>Profile</Text>
             <View style={styles.fieldContainer}>
                 <Text style={styles.label}>Name:</Text>
@@ -123,7 +123,7 @@ const Profile: React.FC = () => {
                     </TouchableOpacity>
                 )}
             </View>
-        </View>
+        </SafeAreaView>
     );
 };
 
@@ -136,11 +136,12 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 24,
         fontWeight: 'bold',
-        marginBottom: 20,
+        margin: 20,
         color: '#FFFFFF'
     },
     fieldContainer: {
         marginBottom: 10,
+        paddingHorizontal: 20
     },
     label: {
         fontSize: 16,
@@ -159,6 +160,7 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         marginTop: 20,
+        paddingHorizontal: 20
     },
     button: {
         backgroundColor: '#950000',

@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#101010',
   },
   header: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
     justifyContent: 'center',
