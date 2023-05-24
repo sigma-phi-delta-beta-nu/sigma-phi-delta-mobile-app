@@ -72,18 +72,21 @@ const EventScreen = () => {
             placeholder="Title"
             value={title}
             onChangeText={setTitle}
+            placeholderTextColor="#101010"
           />
           <TextInput
             style={styles.input}
             placeholder="Location"
             value={location}
             onChangeText={setLocation}
+            placeholderTextColor="#101010"
           />
           <TextInput
             style={styles.input}
             placeholder="Date"
             value={date}
             onChangeText={setDate}
+            placeholderTextColor="#101010"
           />
           <View style={styles.datePickerContainer}>
           <View style={styles.datePickerContainer}>
@@ -96,6 +99,7 @@ const EventScreen = () => {
                 display="default"
                 onChange={handleStartTimeChange}
                 style={{ backgroundColor: '#ffffff', borderRadius: 10}}
+                textColor="#101010"
               />
 
           </View>
@@ -110,7 +114,8 @@ const EventScreen = () => {
                 is24Hour={true}
                 display="default"
                 onChange={handleEndTimeChange}
-                style={{ backgroundColor: '#ffffff', borderRadius: 10,}}
+                style={{backgroundColor: '#ffffff', borderRadius: 10,}}
+                textColor="#101010"
               />
             
           </View>
