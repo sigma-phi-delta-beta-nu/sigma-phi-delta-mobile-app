@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, Linking, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, View, Linking, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
 
 const form1 = 'https://forms.gle/g6hna7PL6YPG6SqFA'
 const description1 = "Social Winter 2023 Feedback"
@@ -23,6 +23,7 @@ const deadline5 = "5/6/23"
 
 function Forms() {
   return (
+    <SafeAreaView style={styles.container}>
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Forms</Text>
 
@@ -51,6 +52,7 @@ function Forms() {
         Due Date: {deadline5}{"\n\n"}
       </Text>
     </ScrollView>
+    </SafeAreaView>
   );
 }
 

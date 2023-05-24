@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FlatList, View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
+import { FlatList, View, SafeAreaView, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 
 type Item = {
   letter: string;
@@ -96,7 +96,7 @@ const Directory = () => {
   );
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <FlatList
         data={DATA}
         renderItem={renderItem}
@@ -112,7 +112,7 @@ const Directory = () => {
           </TouchableOpacity>
         </View>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 };
 
