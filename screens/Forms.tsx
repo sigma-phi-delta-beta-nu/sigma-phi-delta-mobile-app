@@ -21,6 +21,14 @@ const form5 = 'https://forms.gle/FyQRiRsz6N3XpkYZ6'
 const description5 = "Composite Expected Attendance Form"
 const deadline5 = "5/6/23"
 
+const form6 = 'https://forms.gle/xHXzr7ALKppNvexB7'
+const description6 = "Cultural Book Club Interest Form"
+const deadline6 = "End of Quarter"
+
+const form7 = 'https://forms.gle/KkX5ZQzqBqbxkToM9'
+const description7 = "Attendance for Brotherhood Paintball"
+const deadline7 = "5/25/23"
+
 function Forms() {
   return (
     <SafeAreaView style={styles.container}>
@@ -50,6 +58,16 @@ function Forms() {
       <MyButton url={form5} buttonText={description5} />
       <Text style={styles.deadlineCo}>
         Due Date: {deadline5}{"\n\n"}
+      </Text>
+
+      <MyButton url={form6} buttonText={description6} />
+      <Text style={styles.deadlineCo}>
+        Due Date: {deadline6}{"\n\n"}
+      </Text>
+
+      <MyButton url={form7} buttonText={description7} />
+      <Text style={styles.deadlineCo}>
+        Due Date: {deadline7}{"\n\n"}
       </Text>
     </ScrollView>
     </SafeAreaView>
