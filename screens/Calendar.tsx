@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, Button, TextInput, StyleSheet, FlatList, Modal, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, StyleSheet, FlatList, Modal, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface Event {
   id: string;
@@ -19,8 +20,8 @@ const EventScreen = () => {
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
   const [modalVisible, setModalVisible] = useState(false);
-  const [showStartTimePicker, setShowStartTimePicker] = useState(false);
-  const [showEndTimePicker, setShowEndTimePicker] = useState(false);
+  const [showStartTimePicker, setShowStartTimePicker] = useState(true);
+  const [showEndTimePicker, setShowEndTimePicker] = useState(true);
 
   const handleAddEvent = () => {
     const newEvent: Event = {
@@ -45,12 +46,14 @@ const EventScreen = () => {
     const currentTime = selectedTime || startTime;
     setShowStartTimePicker(Platform.OS === 'ios');
     setStartTime(currentTime);
+    setShowEndTimePicker(false);
   };
 
   const handleEndTimeChange = (event: any, selectedTime: any) => {
     const currentTime = selectedTime || endTime;
     setShowEndTimePicker(Platform.OS === 'ios');
     setEndTime(currentTime);
+    setShowStartTimePicker(false);
   };
 
   const handleRemoveEvent = (eventId: string) => {
@@ -58,7 +61,8 @@ const EventScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+
+    <SafeAreaView style={styles.container}>
       <Modal visible={modalVisible} animationType="slide">
         <View style={styles.modalContainer}>
           <Text style={styles.header}>Create Event</Text>
@@ -81,101 +85,119 @@ const EventScreen = () => {
             value={date}
             onChangeText={setDate}
           />
-           <View style={styles.datePickerContainer}>
+          <View style={styles.datePickerContainer}>
+          <View style={styles.datePickerContainer}>
             <Text style={styles.datePickerLabel}>Start Time:</Text>
-            <Button
-              title={startTime.toLocaleTimeString()}
-              onPress={() => setShowStartTimePicker(true)}
-            />
-            {showStartTimePicker && (
+
               <DateTimePicker
                 value={startTime}
                 mode="time"
                 is24Hour={true}
                 display="default"
                 onChange={handleStartTimeChange}
+                style={{ backgroundColor: '#ffffff', borderRadius: 10}}
               />
-            )}
+
+          </View>
           </View>
 
           <View style={styles.datePickerContainer}>
             <Text style={styles.datePickerLabel}>End Time:</Text>
-            <Button
-              title={endTime.toLocaleTimeString()}
-              onPress={() => setShowEndTimePicker(true)}
-            />
-            {showEndTimePicker && (
+
               <DateTimePicker
                 value={endTime}
                 mode="time"
                 is24Hour={true}
                 display="default"
                 onChange={handleEndTimeChange}
-                />
-              )}
-            </View>
-  
-            <Button title="Add Event" onPress={handleAddEvent} />
-            <Button title="Cancel" onPress={() => setModalVisible(false)} />
-          </View>
-        </Modal>
-  
-        <Button title="Create Event" onPress={() => setModalVisible(true)} />
-  
-        <Text style={styles.header}>All Events</Text>
-  
-        <FlatList
-          data={events}
-          keyExtractor={item => item.id}
-          renderItem={({ item }) => (
-            <View style={styles.eventContainer}>
-              <View style={styles.eventHeader}>
-              <Text style={styles.eventTitle}>{item.title}</Text>
-              <Button
-                title="-"
-                onPress={() => handleRemoveEvent(item.id)}
-                color="red"
+                style={{ backgroundColor: '#ffffff', borderRadius: 10,}}
               />
+            
+          </View>
+
+
+          <TouchableOpacity
+            style={styles.button}
+            onPress={handleAddEvent}
+          >
+            <Text style={styles.buttonText}>Add Event</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => setModalVisible(false)}
+          >
+            <Text style={styles.buttonText}>Cancel</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+
+      <Text style={styles.header}>All Events</Text>
+      <FlatList
+        data={events}
+        keyExtractor={item => item.id}
+        renderItem={({ item }) => (
+          <View style={styles.eventContainer}>
+            <View style={styles.eventHeader}>
+              <Text style={styles.eventTitle}>{item.title}</Text>
+              <TouchableOpacity
+                style={styles.removeButton}
+                onPress={() => handleRemoveEvent(item.id)}
+              >
+                <Text style={styles.removeButtonText}>-</Text>
+              </TouchableOpacity>
             </View>
-              <Text>{item.location}</Text>
-              <Text>{item.date}</Text>
-              <Text>{item.startTime.toLocaleTimeString()} - {item.endTime.toLocaleTimeString()}</Text>
-            </View>
-          )}
-        />
-      </View>
-    );
-  };
-  
+            <Text style={styles.eventText}>{item.location}</Text>
+            <Text style={styles.eventText}>{item.date}</Text>
+            <Text style={styles.eventText}>
+              {item.startTime.toLocaleTimeString()} - {item.endTime.toLocaleTimeString()}
+            </Text>
+          </View>
+        )}
+      />
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => setModalVisible(true)}
+      >
+        <Text style={styles.buttonText}>Create Event</Text>
+      </TouchableOpacity>
+    </SafeAreaView>
+
+  );
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#ccc',
+    backgroundColor: '#101010',
   },
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
-    backgroundColor: '#fff',
+    backgroundColor: '#101010',
   },
   header: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
+    justifyContent: 'center',
+    color: '#ffffff',
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#ffffff',
     borderRadius: 4,
     padding: 8,
     marginBottom: 10,
-    width: "100%",
+    width: '100%',
+    backgroundColor: '#ffffff',
   },
   eventContainer: {
     borderWidth: 1,
-    borderColor: '#000000',
+    borderColor: '#ffffff',
     borderRadius: 4,
     padding: 8,
     marginBottom: 10,
@@ -185,7 +207,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 5,
-    backgroundColor: '#888888',
+    backgroundColor: '#950000',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     padding: 10,
@@ -194,6 +216,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 5,
+    color: '#ffffff',
+  },
+  eventText: {
+    color: '#ffffff',
   },
   datePickerContainer: {
     flexDirection: 'row',
@@ -203,8 +229,32 @@ const styles = StyleSheet.create({
   datePickerLabel: {
     flex: 1,
     marginRight: 10,
+    color: '#ffffff',
+  },
+  button: {
+    backgroundColor: '#950000',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    alignSelf: 'center',
+    marginBottom: 10,
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  removeButton: {
+    backgroundColor: 'red',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+  },
+  removeButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 
 export default EventScreen;
-
