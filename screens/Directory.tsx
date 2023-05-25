@@ -76,7 +76,7 @@ const Directory = () => {
     const selectedMajor = MAJORS.find((major) => major.letter === name[0]);
     const selectedCompany = EMPLOYERS.find((employer) => employer.letter === name[0])
     return (
-      <View style={styles.popupContainer}>
+      <SafeAreaView style={styles.popupContainer}>
         <Text style={styles.popupText}>Name: {name}</Text>
         <Text style={styles.popupText}>
           Phone Number: ({selectedPhoneNumber.substring(0, 3)}) {selectedPhoneNumber.substring(3, 6)}-{selectedPhoneNumber.substring(6)}
@@ -84,7 +84,7 @@ const Directory = () => {
         <Text style={styles.popupText}>Major: {selectedMajor ? selectedMajor.major : 'N/A'}</Text>
         <Text style={styles.popupText}>Grad Date: {2026 - parseInt(selectedPhoneNumber[0],10)}</Text>
         <Text style={styles.popupText}>Employers:  {selectedCompany ? selectedCompany.company : 'N/A'}</Text>
-      </View>
+      </SafeAreaView>
     );
   };
 
@@ -97,6 +97,8 @@ const Directory = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.innerContainer}>
+      <Text style={styles.title}>Directory</Text>
       <FlatList
         data={DATA}
         renderItem={renderItem}
@@ -112,6 +114,7 @@ const Directory = () => {
           </TouchableOpacity>
         </View>
       </Modal>
+      </View>
     </SafeAreaView>
   );
 };
@@ -119,7 +122,10 @@ const Directory = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: '#101010',
+  },
+  innerContainer: {
+    padding: 20
   },
   bar: {
     height: 30,
@@ -133,6 +139,7 @@ const styles = StyleSheet.create({
   letter: {
     fontWeight: 'bold',
     fontSize: 16,
+    color: '#FFFFFF'
   },
   nameBar: {
     height: 50,
@@ -152,7 +159,7 @@ const styles = StyleSheet.create({
     width:"100%",
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#000000',
+    backgroundColor: '#101010',
   },
   popupText: {
     fontSize: 20,
@@ -165,9 +172,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   closeButton: {
-    position: 'absolute',
-    top: 20,
-    right: 20,
+    // position: 'absolute',
+    // bottom: 50,
+    // right: '42%',
     backgroundColor:'#950000',
     padding: 10,
     borderRadius: 5,
@@ -175,6 +182,12 @@ const styles = StyleSheet.create({
   closeButtonText: {
     fontSize: 16,
     color: '#000000',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    color: "white"
   },
 });
 
