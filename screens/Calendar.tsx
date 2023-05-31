@@ -150,7 +150,7 @@ const EventScreen = () => {
             <Text style={styles.eventText}>{item.location}</Text>
             <Text style={styles.eventText}>{item.date}</Text>
             <Text style={styles.eventText}>
-              {item.startTime.toLocaleTimeString()} - {item.endTime.toLocaleTimeString()}
+              {item.startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - {item.endTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
             </Text>
           </View>
         )}
@@ -199,6 +199,7 @@ const styles = StyleSheet.create({
   eventContainer: {
     borderWidth: 1,
     borderColor: '#ffffff',
+    backgroundColor: "#950000",
     borderRadius: 4,
     padding: 8,
     marginBottom: 10,
@@ -206,12 +207,9 @@ const styles = StyleSheet.create({
   eventHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 5,
-    backgroundColor: '#950000',
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    padding: 10,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    padding: 5,
   },
   eventTitle: {
     fontSize: 16,
